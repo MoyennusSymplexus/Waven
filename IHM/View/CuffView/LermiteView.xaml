@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="IHM.View.LermiteView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModel="clr-namespace:IHM.ViewModel"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=viewModel:LermiteViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+
+        <TextBlock>
+            <TextBlock.Text>
+                <MultiBinding StringFormat="Effet du Brassard Lermite : &#x0a;{0} ({1}) dégâts">
+                    <Binding Path="LermiteDamage"/>
+                    <Binding Path="LermiteCriticalDamage"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+
+</UserControl>

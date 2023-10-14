@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="IHM.View.CharacterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModel="clr-namespace:IHM.ViewModel"
+             xmlns:view="clr-namespace:IHM.View"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=viewModel:CharacterViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type viewModel:BunelameViewModel}">
+            <view:BunelameView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ExpingoleViewModel}">
+            <view:ExpingoleView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:PivenViewModel}">
+            <view:PivenView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ShiruViewModel}">
+            <view:ShiruView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:VoldorakViewModel}">
+            <view:VoldorakView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:GemmeViewModel}">
+            <view:GemmeView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:KokoroViewModel}">
+            <view:KokoroView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ScalpelViewModel}">
+            <view:ScalpelView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:TamashiViewModel}">
+            <view:TamashiView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:VoraciusViewModel}">
+            <view:VoraciusView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:JustelameViewModel}">
+            <view:JustelameView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:KasaiViewModel}">
+            <view:KasaiView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:OrokViewModel}">
+            <view:OrokView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:SpectralViewModel}">
+            <view:SpectralView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:StalaktossViewModel}">
+            <view:StalaktossView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:KartanaViewModel}">
+            <view:KartanaView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:OrishiViewModel}">
+            <view:OroshiView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:OuraiViewModel}">
+            <view:OuraiView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ShugenViewModel}">
+            <view:ShugenView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:SurinViewModel}">
+            <view:SurinView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:CatalyseurViewModel}">
+            <view:CatalyseurView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:GurpapaViewModel}">
+            <view:GurpapaView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:JikanViewModel}">
+            <view:JikanView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:PikuxalaViewModel}">
+            <view:PikuxalaView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:TakoViewModel}">
+            <view:TakoView />
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <DockPanel>
+        <view:SpellView DockPanel.Dock="Left" Spells="{Binding Spells}" LevelChanged="{Binding LevelChanged}" AddLevel="{Binding AddLevel}" RemoveLevel="{Binding RemoveLevel}"
+                        RuneChanged="{Binding RuneChanged}" />
+        <view:PassiveView DockPanel.Dock="Bottom" Passive="{Binding Passives}"/>
+        <ContentControl Content="{Binding CurrentCharacterViewModel}" />
+    </DockPanel>
+</UserControl>

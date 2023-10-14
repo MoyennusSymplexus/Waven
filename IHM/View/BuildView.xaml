@@ -1,0 +1,169 @@
+﻿<UserControl x:Class="IHM.View.BuildView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:view="clr-namespace:IHM.View"
+             xmlns:viewModel="clr-namespace:IHM.ViewModel"
+             xmlns:ihm="clr-namespace:IHM"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=viewModel:BuildViewModel}"
+             Loaded="BuildLoaded"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <DockPanel>
+        <Grid DockPanel.Dock="Top">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Label>Classe :</Label>
+                <ComboBox  Width="100"
+                      ItemsSource="{Binding ListClass}"
+                      SelectedValue="{Binding SelectedListClass}" />
+
+                <Label>Sous Classe :</Label>
+                <ComboBox   Width="100" HorizontalAlignment="Left"
+                      ItemsSource="{Binding ListSubClass}"
+                      SelectedValue="{Binding SelectedListSubClass}" />
+            </StackPanel>
+        </Grid>
+        <Grid DockPanel.Dock="Bottom" DataContext="{Binding Summary}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" Content="Stat Summary :"/>
+
+            <Label Grid.Row="1" Grid.Column="0" ContentStringFormat="Base Attack : {0}"
+                   Content="{Binding BaseAttack}" />
+            <Label Grid.Row="1" Grid.Column="1" ContentStringFormat="Attack %: {0}"
+                   Content="{Binding Attack}" />
+            <Label Grid.Row="1" Grid.Column="2" ContentStringFormat="Attack on Stat: {0}"
+                   Content="{Binding AttackOnStat}" />
+            <Label Grid.Row="1" Grid.Column="3" ContentStringFormat="Attack in Battle %: {0}"
+                   Content="{Binding AttackInBattle}" />
+            <Label Grid.Row="1" Grid.Column="4" ContentStringFormat="Attack in Battle : {0}"
+                   Content="{Binding TotalAttack}" />
+
+            <Label Grid.Row="2" Grid.Column="0" ContentStringFormat="Base Life : {0}"
+                   Content="{Binding BaseLife}" />
+            <Label Grid.Row="2" Grid.Column="1" ContentStringFormat="Life %: {0}"
+                   Content="{Binding Life}" />
+            <Label Grid.Row="2" Grid.Column="2" ContentStringFormat="Life on Stat: {0}"
+                   Content="{Binding LifeOnStat}" />
+            <Label Grid.Row="2" Grid.Column="3" ContentStringFormat="Life in Battle %: {0}"
+                   Content="{Binding LifeInBattle}" />
+            <Label Grid.Row="2" Grid.Column="4" ContentStringFormat="Life in Battle : {0}"
+                   Content="{Binding TotalLife}" />
+
+            <Label Grid.Row="3" Grid.Column="0" ContentStringFormat="Critical damage : {0}"
+                   Content="{Binding CriticalDamage}" />
+            <Label Grid.Row="3" Grid.Column="1" ContentStringFormat="Critical chance : {0}"
+                   Content="{Binding CriticalChance}" />
+            <Label Grid.Row="3" Grid.Column="2" ContentStringFormat="Damage on crit : {0}"
+                   Content="{Binding AttackWithCrit}" />
+
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="200"/>
+                <ColumnDefinition Width="*" MinWidth="380"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <Label Content="Stat Majeur :"/>
+                <ItemsControl ItemsSource="{Binding NodeList}" Name="NodeList">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Width="150">
+                                    <AccessText>
+                                        <MultiBinding StringFormat="{}{0} : {1}/{2}">
+                                            <Binding Path="Description" Mode="OneTime" />
+                                            <Binding Path="Actual" />
+                                            <Binding Path="Max" Mode="OneTime" />
+                                        </MultiBinding>
+                                    </AccessText>
+                                </Label>
+                                <Button Width="20" Content="+" Command="{Binding DataContext.AddToNode, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                <Button Width="20" Content="-" Command="{Binding DataContext.RemoveToNode, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <Label Content="Equipement :"/>
+                <ItemsControl ItemsSource="{Binding Equipments}" Height="{Binding ElementName=NodeList, Path=ActualHeight}" Margin="0,0,0,-33">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Width="100" Content="{Binding Name}" ContentStringFormat="{}{0} : "/>
+                                <TextBox Width="25" Text="{Binding Level, Mode=OneWay}" LostFocus="ChangeLevel"/>
+                                <Button Width="20" Content="+"
+                                        Command="{Binding DataContext.AddLevel, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}" />
+                                <Button Width="20" Content="-"
+                                        Command="{Binding DataContext.RemoveLevel, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}" />
+                                <Button Width="50" Content="Remove"
+                                        Command="{Binding DataContext.RemoveEquipment, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}" />
+                                <Label Content="Runes :" />
+                                <ItemsControl ItemsSource="{Binding Runes}" VerticalAlignment="Center" Margin="0,4,0,0">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel IsItemsHost="True"></WrapPanel>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding IsActive}" Click="ChangeRune" IsEnabled="{Binding IsComputable}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <StackPanel Orientation="Horizontal">
+                    <ihm:FilterableComboBox ItemsSource="{Binding RingList}" MinWidth="100" x:Name="RingCombo" OnlyValuesInList="True">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ihm:FilterableComboBox>
+                    <Button Width="40" Content="Add"
+                            Command="{Binding DataContext.AddRing, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            CommandParameter="{Binding ElementName=RingCombo, Path=SelectedItem}" />
+                    <ihm:FilterableComboBox ItemsSource="{Binding CuffList}" MinWidth="100" x:Name="CuffCombo" OnlyValuesInList="True">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ihm:FilterableComboBox>
+                    <Button Width="40" Content="Add"
+                            Command="{Binding DataContext.AddCuff, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            CommandParameter="{Binding ElementName=CuffCombo, Path=SelectedItem}" />
+                    <Button Width="50" Content="Max All"
+                            Command="{Binding DataContext.MaxAll, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <view:ToungView Grid.Column="2" DataContext="{Binding ToungViewModel}" Visibility="{Binding IsVisible}" />
+            <view:LermiteView Grid.Column="2" DataContext="{Binding LermiteViewModel}" Visibility="{Binding IsVisible}" />
+        </Grid>
+    </DockPanel>
+</UserControl>

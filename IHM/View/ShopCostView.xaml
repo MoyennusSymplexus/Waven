@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="IHM.View.ShopCostView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModel="clr-namespace:IHM.ViewModel"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=viewModel:ShopCostViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ListView ItemsSource="{Binding ItemList}">
+        <ListView.View>
+            <GridView>
+                <GridViewColumn Header="Level" DisplayMemberBinding="{Binding Level}" />
+                <GridViewColumn Header="Cout du Level Up" DisplayMemberBinding="{Binding LevelUpCost}" />
+                <GridViewColumn Header="Cout cumulé" DisplayMemberBinding="{Binding CumulativeCost}" />
+                <GridViewColumn Header="Cout du Level Up" DisplayMemberBinding="{Binding LevelUpCost2}" />
+                <GridViewColumn Header="Cout cumulé" DisplayMemberBinding="{Binding CumulativeCost2}" />
+                <GridViewColumn Header="Cout du Level Up" DisplayMemberBinding="{Binding LevelUpCost3}" />
+                <GridViewColumn Header="Cout cumulé" DisplayMemberBinding="{Binding CumulativeCost3}" />
+                <GridViewColumn Header="Cout du Level Up" DisplayMemberBinding="{Binding LevelUpCost4}" />
+                <GridViewColumn Header="Cout cumulé" DisplayMemberBinding="{Binding CumulativeCost4}" />
+            </GridView>
+        </ListView.View>
+    </ListView>
+</UserControl>

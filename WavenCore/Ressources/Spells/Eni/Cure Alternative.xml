@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Spell xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Name>Cure Alternative</Name>
+    <Effects>
+        <SpellEffect>
+            <Value>8</Value>
+            <SpellType>Fire</SpellType>
+            <TriggerType>None</TriggerType>
+        </SpellEffect>
+    </Effects>
+    <Runes>
+        <Rune>
+            <Value>30</Value>
+            <Type>RuneDamage</Type>
+            <TriggerType>None</TriggerType>
+        </Rune>
+        <Rune>
+            <Value>25</Value>
+            <Type>AttackInBattle</Type>
+            <TriggerType>Critique</TriggerType>
+        </Rune>
+        <Rune>
+            <Value>15</Value>
+            <Type>CriticalChance</Type>
+            <TriggerType>None</TriggerType>
+        </Rune>
+    </Runes>
+</Spell>
+
+<!-- Valeur possible pour SpellType
+
+None,
+Air,
+Water,
+Fire,
+Earth,
+Collision,
+Attack,
+Heal,
+ArmorUp
+
+-->
+
+<!-- Valeur possible pour TriggerType
+
+None,
+Melee,
+Critique
+
+-->
+
+<!-- Valeur possible pour Type
+
+NotComputable       = Tout ce qui n'apparait pas dans cette liste et ne sera jamais calculé
+LifeInBattle        = % de vie en combat
+Life                = % de vie hors combat
+ScalingLife         = % de vie hors combat, par niveau
+AttackInBattle      = % d'attaque en combat
+Attack              = % d'attaque hors combat
+ScalingAttack       = % d'attaque hors combat, par niveau
+SpellDamage         = % de dégâts des sorts hors combat        // Pas utilisé pour le moment
+SpellDamageInBattle = % de dégâts des sorts en combat          // Pas utilisé pour le moment
+AirDamage           = % de dégâts des sorts air hors combat    // Pas utilisé pour le moment
+FireDamage          = % de dégâts des sorts feu hors combat    // Pas utilisé pour le moment
+WaterDamage         = % de dégâts des sorts eau hors combat    // Pas utilisé pour le moment
+EarthDamage         = % de dégâts des sorts terre hors combat  // Pas utilisé pour le moment
+CollisionDamage     = % de dégâts collision hors combat        // Pas utilisé pour le moment
+ElementalDamage     = % de dégâts élémentaire feu hors combat  // Pas utilisé pour le moment
+CriticalChance      = % de chance de coup critique             
+CriticalDamage      = % de dégâts critique hors combat   
+RuneDamage          = % de dommage réservé aux runes de sorts     
+
+-->

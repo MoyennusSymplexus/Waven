@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Ring xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Name>Rak</Name>
+    <Effect>
+        <Value>10</Value>
+        <Type>AttackInBattle</Type>
+    </Effect>
+    <BaseStat1>
+        <Value>1</Value>
+        <Type>ScalingAttack</Type>
+    </BaseStat1>
+    <BaseStat2 xsi:nil="true" />
+    <Runes>
+        <Rune>
+            <Value>5</Value>
+            <Type>Attack</Type>
+        </Rune>
+        <Rune>
+            <Value>5</Value>
+            <Type>CriticalChance</Type>
+        </Rune>
+        <Rune>
+            <Value>20</Value>
+            <Type>CriticalDamage</Type>
+        </Rune>
+        <Rune>
+            <Value>5</Value>
+            <Type>NotComputable</Type>
+        </Rune>
+        <Rune>
+            <Value>20</Value>
+            <Type>NotComputable</Type>
+        </Rune>
+        <Rune>
+            <Value>10</Value>
+            <Type>Attack</Type>
+        </Rune>
+        <Rune>
+            <Value>1</Value>
+            <Type>ScalingLife</Type>
+        </Rune>
+    </Runes>
+    <Type>Ring</Type>
+</Ring>

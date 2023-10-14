@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur Xml Waven</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+
+
+<body onload="javascript:fillThePage()">
+    <section class="section">
+        <div class="container">
+            <h1 class="title">
+                Générateur d'xml à la con pour Waven.
+            </h1>
+        </div>
+    </section>
+    <!-- NotComputable
+    LifeInBattle
+    Life
+    ScalingLife
+    AttackInBattle
+    Attack
+    ScalingAttack
+    SpellDamage
+    SpellDamageInBattle
+    AirDamage
+    FireDamage
+    WaterDamage
+    EarthDamage
+    CollisionDamage
+    ElementalDamage
+    CriticalChance
+    CriticalDamage
+    RuneDamage
+    ScalingSpellDamage
+    SiffLife
+    ScalingAirDamage
+    ScalingFireDamage
+    ScalingWaterDamage
+    ScalingEarthDamage
+    Heal
+    Armor -->
+
+    <section class="section">
+        <div class="field is-horizontal">
+            <div class="container ">
+                <div class="field">
+                    <div class="label">Equipement</div>
+                </div>
+                <div id="nameDiv"></div>
+                <div id="equipmentTypeDiv"></div>
+            </div>
+
+            <div class="container " id="eqBaseEffectDiv">
+                <div class="field">
+                    <div class="label">Effet de base</div>
+                </div>
+            </div>
+            <div class="container " id="eqBaseBonusDiv">
+                <div class="field">
+                    <div class="label">Bonus de base</div>
+                </div>
+
+            </div>
+            <div class="container">
+                <div class="label">Bonus de base 2</div>
+                <label class="checkbox label">
+                    <input type="checkbox" id="secondSlotCheckbox" onchange="changeSecondSlot(this)">
+                    Activé
+                </label>
+                <div id="eqBaseBonusDiv2">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">
+                Runes
+            </h1>
+        </div>
+        <br>
+    <progress class="progress" value="100" max="100"></progress>
+        <div class="field is-horizontal" id="runes1-3">
+            
+        </div>
+    <br>
+    <progress class="progress" value="100" max="100"></progress>
+        <div class="field is-horizontal" id="runes4-6">
+            
+        </div>
+        <br>
+    <progress class="progress" value="100" max="100"></progress>
+    <div class="field is-horizontal" id="runes7">
+        <label class="checkbox label">
+            <input type="checkbox" id="7thRuneCheckbox" onchange="change7thRune(this)">
+            Activé
+        </label>
+    </div>
+    <br>
+    <progress class="progress" value="100" max="100"></progress>
+    </section>
+
+    <section class="section">
+        <h1 class="title">
+            XML
+        </h1>
+        <button class="button" onclick="displayXML()">Générer XML</button>
+        <textarea readonly class="textarea" placeholder="XML généré ici." id="xmlArea"></textarea>
+    </section>
+</body>
+<script type="text/javascript">
+    const equipmentTypes = {
+        options: [
+            { value: "Ring", text: "Anneau" },
+            { value: "Cuff", text: "Brassard" }],
+        selected: 0
+    }
+
+    const effectTypes = {
+        options: [
+            { value: "NotComputable", text: "Non référencé" },
+            { value: "SpellDamageInBattle", text: "Dégats de vos sorts en début de combat" },
+            { value: "AttackInBattle", text: "Attaque en début de combat" },
+            { value: "LifeInBattle", text: "Vie en début de combat" },
+            { value: "SiffLife", text: "Spécial Siff" },
+            { value: "Heal", text: "Soin" }
+        ],
+        selected: 0
+    }
+    const bonusTypes = {
+        options: [
+            { value: "NotComputable", text: "Non référencé" },
+            { value: "Life", text: "Vie" },
+            { value: "ScalingLife", text: "Vie par niveau" },
+            { value: "Attack", text: "Attaque" },
+            { value: "ScalingAttack", text: "Attaque par niveau" },
+            { value: "SpellDamage", text: "Dégats de vos sorts" },
+            { value: "ScalingSpellDamage", text: "Dégats de vos sorts par niveau" },
+            { value: "AirDamage", text: "Dégats de vos sorts air" },
+            { value: "ScalingAirDamage", text: "Dégats de vos sorts air par niveau" },
+            { value: "FireDamage", text: "Dégats de vos sorts feu" },
+            { value: "ScalingFireDamage", text: "Dégats de vos sorts feu par niveau" },
+            { value: "WaterDamage", text: "Dégats de vos sorts eau" },
+            { value: "ScalingWaterDamage", text: "Dégats de vos sorts eau par niveau" },
+            { value: "EarthDamage", text: "Dégats de vos sorts terre" },
+            { value: "ScalingEarthDamage", text: "Dégats de vos sorts terre par niveau" },
+            { value: "CollisionDamage", text: "Dégats de collision" },
+            { value: "ElementalDamage", text: "Dégats de vos sorts élémentaire" },
+            { value: "CriticalChance", text: "Chance de coup critique" },
+            { value: "CriticalDamage", text: "Dégats de coup critique" },
+            { value: "Heal", text: "Soin" },
+            { value: "Armor", text: "Armure" }],
+        selected: 0
+    }
+    function fillThePage() {
+        addTextInput("nameDiv", "Nom", "name", "Gelano")
+        addSelect("equipmentTypeDiv", "Type d'équipement", "equipmentType", equipmentTypes)
+        //document.getElementById("eqBaseEffectDiv").appendChild(createLabel("Effet de base",""))
+        addTextInput("eqBaseEffectDiv", "Valeur (%)", "eqBaseEffectValue", "10", false),
+            addSelect("eqBaseEffectDiv", "Type d'effet", "eqBaseEffectType", effectTypes)
+        addTextInput("eqBaseBonusDiv", "Valeur (%)", "eqBaseBonusValue", "1", true)
+        addSelect("eqBaseBonusDiv", "Type de bonus", "eqBaseBonusType", bonusTypes)
+        addTextInput("eqBaseBonusDiv2", "Valeur (%)", "eqBaseBonusValue2", "1", false)
+        addSelect("eqBaseBonusDiv2", "Type de bonus", "eqBaseBonusType2", bonusTypes)
+        const secondSlotCheckbox = document.getElementById("secondSlotCheckbox")
+        secondSlotCheckbox.checked = false
+        changeSecondSlot(secondSlotCheckbox)
+
+        for (let index = 1; index <= 3; index++) {
+            addRuneTemplate("runes1-3",index)
+        }
+        for (let index = 4; index <= 6; index++) {
+            addRuneTemplate("runes4-6",index)
+        }
+        addRuneTemplate("runes7",7)
+        const seventhRuneCheckbox = document.getElementById("7thRuneCheckbox")
+        seventhRuneCheckbox.checked = true
+        change7thRune(seventhRuneCheckbox)
+        
+    }
+    function displayXML(){
+        const xmlArea = document.getElementById("xmlArea")
+        const generatedXML = generateXML()
+        xmlArea.value = generatedXML
+    }
+    function assignDefault(id,pfDefault){
+        const elem = document.getElementById(id).value
+        if(elem){
+            return elem
+        }else{
+            return pfDefault
+        }
+    }
+    function generateXML(){
+        
+        const typeEq = assignDefault("equipmentType","Failed")
+        const nameEq = assignDefault("name","Failed")
+        const eqBaseEffectValue = assignDefault("eqBaseEffectValue","0")
+        const eqBaseEffectType = assignDefault("eqBaseEffectType","NotComputable")
+        const eqBaseBonusValue = assignDefault("eqBaseBonusValue","0")
+        const eqBaseBonusType = assignDefault("eqBaseBonusType","NotComputable")
+        
+        
+        const isSecondSlot = document.getElementById("secondSlotCheckbox").checked
+        let secondSlot
+        if(isSecondSlot){
+            const eqBaseBonusValue2 = assignDefault("eqBaseBonusValue2","0")
+            const eqBaseBonusType2 = assignDefault("eqBaseBonusType2","NotComputable")
+            secondSlot = `    <BaseStat2>
+        <Value>${eqBaseBonusValue2}</Value>
+        <Type>${eqBaseBonusType2}</Type>
+    </BaseStat2>`
+        }else{
+            secondSlot = `  <BaseStat2 xsi:nil="true" />`
+        }
+        const rune1Value = assignDefault("rune1Value","0")
+        const rune1Type = assignDefault("rune1Type","NotComputable")
+        const rune2Value = assignDefault("rune2Value","0")
+        const rune2Type = assignDefault("rune2Type","NotComputable")
+        const rune3Value = assignDefault("rune3Value","0")
+        const rune3Type = assignDefault("rune3Type","NotComputable")
+        const rune4Value = assignDefault("rune4Value","0")
+        const rune4Type = assignDefault("rune4Type","NotComputable")
+        const rune5Value = assignDefault("rune5Value","0")
+        const rune5Type = assignDefault("rune5Type","NotComputable")
+        const rune6Value = assignDefault("rune6Value","0")
+        const rune6Type = assignDefault("rune6Type","NotComputable")
+        
+        const isRune7slot = document.getElementById("7thRuneCheckbox").checked
+        let rune7slot
+        if(isRune7slot){
+            const rune7Value = assignDefault("rune7Value","0")
+            const rune7Type = assignDefault("rune7Type","NotComputable")
+            rune7slot = `
+        <Rune>
+            <Value>${rune7Value}</Value>
+            <Type>${rune7Type}</Type>
+            <TriggerType>None</TriggerType>
+        </Rune>`
+        }else{
+            rune7slot = ""
+        }
+        const xml = 
+`<?xml version="1.0" encoding="utf-8"?>
+<${typeEq} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Name>${nameEq}</Name>
+    <Effect>
+		<Value>${eqBaseEffectValue}</Value>
+		<Type>${eqBaseEffectType}</Type>
+	</Effect>
+    <BaseStat1>
+		<Value>${eqBaseBonusValue}</Value>
+		<Type>${eqBaseBonusType}</Type>
+	</BaseStat1>
+    ${secondSlot}
+    <Runes>
+        <Rune>
+			<Value>${rune1Value}</Value>
+			<Type>${rune1Type}</Type>
+			<TriggerType>None</TriggerType>
+		</Rune>
+		<Rune>
+			<Value>${rune2Value}</Value>
+			<Type>${rune2Type}</Type>
+			<TriggerType>None</TriggerType>
+		</Rune>
+		<Rune>
+			<Value>${rune3Value}</Value>
+			<Type>${rune3Type}</Type>
+			<TriggerType>None</TriggerType>
+		</Rune>
+		<Rune>
+			<Value>${rune4Value}</Value>
+			<Type>${rune4Type}</Type>
+			<TriggerType>None</TriggerType>
+		</Rune>
+		<Rune>
+			<Value>${rune5Value}</Value>
+			<Type>${rune5Type}</Type>
+			<TriggerType>None</TriggerType>
+		</Rune>
+		<Rune>
+			<Value>${rune6Value}</Value>
+			<Type>${rune6Type}</Type>
+			<TriggerType>None</TriggerType>
+		</Rune>${rune7slot}
+    </Runes>
+    <Type>${typeEq}</Type>
+</${typeEq}>`
+        return xml
+    }
+    function change7thRune(it){
+        const dynamicDiv = document.getElementById('rune7')
+        const valueInput = document.getElementById("rune7Value")
+        const select = document.getElementById("rune7Type")
+        if (it.checked) {
+            dynamicDiv.style.visibility = "visible"
+        } else {
+            dynamicDiv.style.visibility = "hidden"
+            valueInput.value = ""
+            select.setAttribute("selectedIndex", 0)
+            select.setAttribute("value", "NotComputable")
+            select.options[0].selected = true
+        }
+    }
+    function addRuneTemplate(idParent,index){
+        const id = `rune${index}`
+        const parent = document.getElementById(idParent)
+        const divContainer = document.createElement("div")
+        divContainer.classList.add("container")
+        divContainer.setAttribute("id", id)
+
+        const divField = document.createElement("div")
+        divField.classList.add("field")
+        const label = document.createElement("label")
+        label.classList.add("label")
+        label.innerHTML = `Rune ${index}`
+        divField.appendChild(label)
+        divContainer.appendChild(divField)
+        
+        parent.appendChild(divContainer)
+        addTextInput(id, "Valeur (%)", `rune${index}Value`, "10", false)
+        addSelect(id, "Type de bonus", `rune${index}Type`, bonusTypes)
+    }
+    function addSelect(idParent, pfLabel, pfId, selectData) {
+        const parent = document.getElementById(idParent)
+        const divField = createLabel(pfLabel, pfId)
+        const divSelect = document.createElement("div")
+        divSelect.classList.add("select")
+        const selectElem = document.createElement("select")
+        selectElem.setAttribute("id", pfId)
+        selectElem.setAttribute("name", pfId)
+        selectData.options.forEach(optData => {
+            const option = document.createElement("option")
+            option.value = optData.value
+            option.text = optData.text
+            selectElem.add(option)
+        })
+        selectElem.setAttribute("selectedIndex", selectData.selected)
+
+        divSelect.appendChild(selectElem)
+        divField.appendChild(divSelect)
+        parent.appendChild(divField)
+    }
+    function addTextInput(idParent, pfLabel, pfId, pfPlaceholder, isPlaceholderDefaultValue) {
+        const parent = document.getElementById(idParent)
+        const divField = createLabel(pfLabel, pfId)
+
+        const divControl = document.createElement("div")
+        divControl.classList.add("control")
+        const input = document.createElement("input")
+        input.classList.add("input")
+        input.setAttribute("type", "text")
+        input.setAttribute("id", pfId)
+        input.setAttribute("name", pfId)
+        if (isPlaceholderDefaultValue) {
+            input.setAttribute("value", pfPlaceholder)
+
+        } else {
+            input.setAttribute("placeholder", pfPlaceholder)
+        }
+        input.setAttribute("autocomplete", "off")
+
+        divField.appendChild(divControl)
+        divControl.appendChild(input)
+        parent.appendChild(divField)
+    }
+    function createLabel(pfLabel, pfId) {
+        const divField = document.createElement("div")
+        divField.classList.add("field")
+        const label = document.createElement("label")
+        label.classList.add("label")
+        label.innerHTML = pfLabel
+        label.setAttribute("for", pfId)
+        divField.appendChild(label)
+        return divField
+    }
+    function changeSecondSlot(it) {
+        const dynamicDiv = document.getElementById('eqBaseBonusDiv2')
+        const valueInput = document.getElementById("eqBaseBonusValue2")
+        const select = document.getElementById("eqBaseBonusType2")
+        if (it.checked) {
+            dynamicDiv.style.visibility = "visible"
+        } else {
+            dynamicDiv.style.visibility = "hidden"
+            valueInput.value = ""
+            select.setAttribute("selectedIndex", 0)
+            select.setAttribute("value", "NotComputable")
+            select.options[0].selected = true
+        }
+    }
+</script>
+
+</html>

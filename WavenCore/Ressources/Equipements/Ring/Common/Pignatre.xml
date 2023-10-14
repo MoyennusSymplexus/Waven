@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Ring xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Name>Pignatre</Name>
+    <Effect>
+        <Value>30</Value>
+        <Type>AttackInBattle</Type>
+    </Effect>
+    <BaseStat1>
+        <Value>1</Value>
+        <Type>ScalingLife</Type>
+    </BaseStat1>
+    <BaseStat2 xsi:nil="true" />
+    <!-- A utiliser pour les items avec deux stats natives
+    <BaseStat2>
+        <Value></Value>
+        <Type></Type>
+    </BaseStat2>
+    --> 
+    <Runes>
+        <Rune>
+            <Value>10</Value>
+            <Type>SpellDamage</Type>
+        </Rune>
+        <Rune>
+            <Value>20</Value>
+            <Type>Life</Type>
+        </Rune>
+        <Rune>
+            <Value>20</Value>
+            <Type>NotComputable</Type>
+        </Rune>
+        <Rune>
+            <Value>2</Value>
+            <Type>NotComputable</Type>
+        </Rune>
+        <Rune>
+            <Value>5</Value>
+            <Type>NotComputable</Type>
+        </Rune>
+        <Rune>
+            <Value>1</Value>
+            <Type>ScalingAttack</Type>
+        </Rune>
+        <Rune>
+            <Value>1</Value>
+            <Type>ScalingAttack</Type>
+        </Rune>
+    </Runes>
+    <Type>Ring</Type>
+</Ring>
+
+<!-- Valeur possible pour Type
+
+NotComputable       = Tout ce qui n'apparait pas dans cette liste et ne sera jamais calculé
+LifeInBattle        = % de vie en combat
+Life                = % de vie hors combat
+ScalingLife         = % de vie hors combat, par niveau
+AttackInBattle      = % d'attaque en combat
+Attack              = % d'attaque hors combat
+ScalingAttack       = % d'attaque hors combat, par niveau
+SpellDamage         = % de dégâts des sorts hors combat        // Pas utilisé pour le moment
+SpellDamageInBattle = % de dégâts des sorts en combat          // Pas utilisé pour le moment
+AirDamage           = % de dégâts des sorts air hors combat    // Pas utilisé pour le moment
+FireDamage          = % de dégâts des sorts feu hors combat    // Pas utilisé pour le moment
+WaterDamage         = % de dégâts des sorts eau hors combat    // Pas utilisé pour le moment
+EarthDamage         = % de dégâts des sorts terre hors combat  // Pas utilisé pour le moment
+CollisionDamage     = % de dégâts collision hors combat        // Pas utilisé pour le moment
+ElementalDamage     = % de dégâts élémentaire feu hors combat  // Pas utilisé pour le moment
+CriticalChance      = % de chance de coup critique             // Pas utilisé pour le moment
+CriticalDamage      = % de dégâts critique hors combat         // Pas utilisé pour le moment
+
+-->
