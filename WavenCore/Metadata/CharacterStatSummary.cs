@@ -35,12 +35,12 @@ namespace WavenCore.Metadata
 
         public double       BaseAttack     => _character.Attack;
         public double       Attack         => _stats.Attack;
-        public double       AttackOnStat   => ComputeSpecialAttack();
+        public double       AttackOnStat   => ComputeStat(BaseAttack, Attack);
         public double       BaseLife       => _character.Life;
         public int          Life           => _stats.Life;
         public double       LifeOnStat     => ComputeStat(BaseLife, Life);
         public int          AttackInBattle => _stats.AttackInBattle;
-        public double       TotalAttack    => ComputeStat(AttackOnStat, AttackInBattle);
+        public double       TotalAttack    => ComputeSpecialAttack();
         public int          LifeInBattle   => _stats.LifeInBattle;
         public double       TotalLife      => ComputeSpecialLife();
         public int          CriticalDamage => _stats.CriticalDamage;
@@ -52,15 +52,15 @@ namespace WavenCore.Metadata
 
         private double ComputeSpecialAttack() {
             if (_character.SubClass != Voracius.ClassName) {
-                return ComputeStat(BaseAttack, Attack);
+                return ComputeStat(AttackOnStat, AttackInBattle);
             }
 
             if (!_character.Passives.First(x => x.Name == PassiveConst.Voracius3).IsActive) {
-                return ComputeStat(BaseAttack, Attack);
+                return ComputeStat(AttackOnStat, AttackInBattle);
             }
 
-            double passiveAttack = Math.Round(TotalLife * 0.01);
-            return ComputeStat(BaseAttack + passiveAttack, Attack);
+            double passiveAttack = Math.Round(TotalLife * 0.03);
+            return ComputeStat(AttackOnStat + passiveAttack, AttackInBattle);
         }
 
         private double ComputeSpecialLife() {

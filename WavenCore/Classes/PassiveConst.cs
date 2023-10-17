@@ -102,7 +102,7 @@
         public const string Voracius2     = "Maitre lame";
         public const string VoraciusDesc2 = "Lorsque votre héros est soigné : Place un COEUR VORACIUS jusqu'à 3 cases autour de lui";
         public const string Voracius3     = "Vitalité voracius";
-        public const string VoraciusDesc3 = "DEBUT DU COMBAT : Votre héros gagne 1% de sa VIE MAX en ATTAQUE";
+        public const string VoraciusDesc3 = "DEBUT DU COMBAT : Votre héros gagne 3% de sa VIE MAX en ATTAQUE";
         public const string Voracius4     = "Puissance Voracius";
         public const string VoraciusDesc4 = "Lorsqu'il est soigné : +20% d'ATTAQUE à votre héros pour le tour";
 
